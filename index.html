@@ -1,0 +1,67 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+
+<h2>Tic-Tac-Toe</h2>
+
+<p>Below is a Tic-Tac-Toe board, if you're unsure of what Tic-Tac-Toe is, see <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">wikipedia</a>.
+    You are required to implement a basic version of the game. Funtionality is more important than what it looks like, however you have full
+    scope to change the markup, design and code as you see fit.</p>
+
+<hr />
+<style>
+    .main td {height: 30px; width: 30px; }
+</style>
+<table border="10" cellpadding="20" cellspacing="10" class="main">
+    <tr>
+        <td id="0" onclick="takeMove(0)"></td>
+        <td id="1" onclick="takeMove(1)"></td>
+        <td id="2" onclick="takeMove(2)"></td>
+    </tr>
+    <tr>
+        <td id="3" onclick="takeMove(3)"></td>
+        <td id="4" onclick="takeMove(4)"></td>
+        <td id="5" onclick="takeMove(5)"></td>
+    </tr>
+    <tr>
+        <td id="6" onclick="takeMove(6)"></td>
+        <td id="7" onclick="takeMove(7)"></td>
+        <td id="8" onclick="takeMove(8)"></td>
+    </tr>
+</table>
+
+    <script>
+
+        $(document).ready(function () {
+            $("td").click(function () {
+            $(this).unbind("click");
+            $(this).html(currentPlayer);
+            });
+        });
+
+        var board = ["", "", "", "", "", "", "", "", ""];
+        var playerOne = "x";
+        var playerTwo = "o";
+        var winCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2]]
+        currentPlayer = playerOne;
+
+        function takeMove(position) {
+            board[position] = currentPlayer;
+            changePlayer();
+            checkWinner();
+        };
+
+        function changePlayer() {
+           currentPlayer = (currentPlayer === playerOne) ? playerTwo : playerOne; 
+        };
+
+        function checkWinner() {
+            $.each(winCombinations, function (index, value) {
+                if (board[winCombinations[index][0]] === board[winCombinations[index][1]]
+                 && board[winCombinations[index][0]] === board[winCombinations[index][2]]
+                 && board[winCombinations[index][0]] !== "") {
+                    alert("winner is: " + currentPlayer)
+                }  
+            });
+        }
+           
+     
+    </script>
