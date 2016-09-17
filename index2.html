@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+
+		table {
+			width: 150px;
+			margin: 0 auto;
+		}
+
+		td {
+			border: 1px solid black;
+			height: 50px;
+			width: 50px;
+			text-align: center;
+			font-size: 14px;
+			font-weight: bold;
+			font-family: arial;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+	var currentTurn,
+	 	winner;
+
+	window.onload = function () {
+		//start the game when the window loads
+		startGame();
+	}
+
+	function declareTurn() {
+		//used to tell user whose turn it is
+		document.getElementById('status').innerText = 'Currently its ' + document.turn + ' turn'; 
+	}
+
+	function startGame () {
+		document.turn = 'X';
+		document.winner = null;
+		declareTurn();
+	}
+
+	function makeMove(square) {
+		if(document.winner != null){
+			return;
+		}
+		else if(square.innerText == ""){	
+			square.innerText = document.turn;
+			switchTurn();
+		} else {
+			setMessage('Someone is already there');
+		}
+	}
+
+	function switchTurn() {
+		if(checkForWinner(document.turn)){
+			winner = true;
+			document.winner = document.turn;
+			setMessage('congrats ' + document.turn);
+		}
+		else if(document.turn === 'O') {
+			document.turn = 'X';
+			declareTurn();
+		} else {
+			document.turn = 'O';
+			declareTurn();
+		}
+		
+	}
+
+	function checkForWinner(move){
+		var result = false;
+		if( checkRow(1,2,3,move) ||
+			checkRow(4,5,6,move) ||
+			checkRow(7,8,9,move) ||
+			checkRow(1,4,7,move) ||
+			checkRow(2,5,8,move) ||
+			checkRow(3,6,9,move) ||
+			checkRow(1,5,9,move) ||
+			checkRow(3,5,7,move)
+			) {
+			result = true;
+		}
+		return result;
+	}
+
+	function checkRow(a, b, c, move) {
+		var result = false;
+		if(getBox(a) == move && getBox(b) == move && getBox(c) == move){
+			result = true;
+		}
+
+		return result;
+	}
+
+	function getBox(number) {
+		return document.getElementById('s' + number).innerText;
+	}
+
+	function setMessage (message) {
+		return document.getElementById('status').innerText = message;
+	}
+	</script>
+</head>
+<body>
+
+<div id='status'></div>
+<table>
+	<tr>
+		<td id="s1" onclick="makeMove(this);"></td>
+		<td id="s2" onclick="makeMove(this);"></td>
+		<td id="s3" onclick="makeMove(this);"></td>
+	</tr>
+
+	<tr>
+		<td id="s4" onclick="makeMove(this);"></td>
+		<td id="s5" onclick="makeMove(this);"></td>
+		<td id="s6" onclick="makeMove(this);"></td>
+	</tr>
+
+	<tr>
+		<td id="s7" onclick="makeMove(this);"></td>
+		<td id="s8" onclick="makeMove(this);"></td>
+		<td id="s9" onclick="makeMove(this);"></td>
+	</tr>
+</table>
+
+</body>
+</html>
